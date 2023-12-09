@@ -30,7 +30,7 @@ import static org.springframework.http.HttpHeaders.*;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/video")
+@RequestMapping("/videos")
 public class VideoController {
 
     private final VideoService videoService;
