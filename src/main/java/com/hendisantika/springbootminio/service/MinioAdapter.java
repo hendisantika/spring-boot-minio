@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.List;
 
 /**
@@ -36,5 +38,19 @@ public class MinioAdapter {
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
+    }
+
+    public void uploadFile(String name, byte[] content) {
+        File file = new File("/tmp/" + name);
+        file.canWrite();
+        file.canRead();
+        try {
+            FileOutputStream iofs = new FileOutputStream(file);
+            iofs.write(content);
+            minioClient.putObject(defaultBucketName, defaultBaseFolder + name, file.getAbsolutePath());
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+
     }
 }
