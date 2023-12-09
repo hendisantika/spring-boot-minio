@@ -1,5 +1,6 @@
 package com.hendisantika.springbootminio.service;
 
+import com.hendisantika.springbootminio.config.MinioConfig;
 import io.minio.GetObjectArgs;
 import io.minio.MinioClient;
 import io.minio.PutObjectArgs;
