@@ -37,3 +37,15 @@ From there, we can create our first bucket:
 4. Setup your MinIO credentials in `application.yml`
 5. Run your application: `mvn clean spring-boot:run`
 6. Open your POSTMAN App
+
+### Image Screen shot
+
+Add New File
+
+![Add New File](img/add.png "Add New File")
+
+Get File
+
+![Get File](img/get.png "Get File")
+
+![Get File](img/get2.png "Get File")
