@@ -3,6 +3,7 @@ package com.hendisantika.springbootminio.service;
 import com.hendisantika.springbootminio.entity.FileMetadataEntity;
 import com.hendisantika.springbootminio.exception.StorageException;
 import com.hendisantika.springbootminio.repository.FileMetadataRepository;
+import com.hendisantika.springbootminio.util.Range;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -45,5 +46,10 @@ public class VideoService {
             log.error("Exception occurred when trying to save the file", ex);
             throw new StorageException(ex);
         }
+    }
+
+    public ChunkWithMetadata fetchChunk(UUID uuid, Range range) {
+        FileMetadataEntity fileMetadata = fileMetadataRepository.findById(uuid.toString()).orElseThrow();
+        return new ChunkWithMetadata(fileMetadata, readChunk(uuid, range, fileMetadata.getSize()));
     }
 }
