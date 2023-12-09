@@ -1,9 +1,12 @@
 package com.hendisantika.springbootminio.service;
 
 import io.minio.MinioClient;
+import io.minio.messages.Bucket;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -26,4 +29,12 @@ public class MinioAdapter {
 
     @Value("${minio.default.folder}")
     private String defaultBaseFolder;
+
+    public List<Bucket> getAllBuckets() {
+        try {
+            return minioClient.listBuckets();
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
 }
