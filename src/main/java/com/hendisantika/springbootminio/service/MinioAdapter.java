@@ -3,11 +3,13 @@ package com.hendisantika.springbootminio.service;
 import io.minio.MinioClient;
 import io.minio.messages.Bucket;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -51,6 +53,18 @@ public class MinioAdapter {
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
+    }
 
+    public byte[] getFile(String key) {
+        try {
+            InputStream obj = minioClient.getObject(defaultBucketName, defaultBaseFolder + "/" + key);
+
+            byte[] content = IOUtils.toByteArray(obj);
+            obj.close();
+            return content;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
