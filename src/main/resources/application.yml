@@ -13,7 +13,7 @@ spring:
     show-sql: true
     database: POSTGRESQL
 
-photon:
+hendi:
   streaming:
     default-chunk-size: 3145728 #value in bytes
 
