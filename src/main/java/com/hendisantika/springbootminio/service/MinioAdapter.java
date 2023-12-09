@@ -2,6 +2,7 @@ package com.hendisantika.springbootminio.service;
 
 import io.minio.MinioClient;
 import io.minio.messages.Bucket;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -66,5 +67,9 @@ public class MinioAdapter {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @PostConstruct
+    public void init() {
     }
 }
