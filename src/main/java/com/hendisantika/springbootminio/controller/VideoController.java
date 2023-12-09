@@ -62,4 +62,8 @@ public class VideoController {
     private String calculateContentLengthHeader(Range range, long fileSize) {
         return String.valueOf(range.getRangeEnd(fileSize) - range.getRangeStart() + 1);
     }
+
+    private String constructContentRangeHeader(Range range, long fileSize) {
+        return "bytes " + range.getRangeStart() + "-" + range.getRangeEnd(fileSize) + "/" + fileSize;
+    }
 }
