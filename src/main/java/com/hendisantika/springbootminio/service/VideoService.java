@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.InputStream;
 import java.util.UUID;
 
 /**
@@ -51,5 +52,17 @@ public class VideoService {
     public ChunkWithMetadata fetchChunk(UUID uuid, Range range) {
         FileMetadataEntity fileMetadata = fileMetadataRepository.findById(uuid.toString()).orElseThrow();
         return new ChunkWithMetadata(fileMetadata, readChunk(uuid, range, fileMetadata.getSize()));
+    }
+
+    private byte[] readChunk(UUID uuid, Range range, long fileSize) {
+        long startPosition = range.getRangeStart();
+        long endPosition = range.getRangeEnd(fileSize);
+        int chunkSize = (int) (endPosition - startPosition + 1);
+        try (InputStream inputStream = storageService.getInputStream(uuid, startPosition, chunkSize)) {
+            return inputStream.readAllBytes();
+        } catch (Exception exception) {
+            log.error("Exception occurred when trying to read file with ID = {}", uuid);
+            throw new StorageException(exception);
+        }
     }
 }
