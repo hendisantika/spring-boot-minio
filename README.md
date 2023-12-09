@@ -29,4 +29,11 @@ minioadmin / minioadmin.
 
 From there, we can create our first bucket:
 
+### Things todo list
 
+1. Clone this repository: `git clone https://github.com/hendisantika/spring-boot-minio.git`
+2. Navigate to the folder: `cd spring-boot-minio`
+3. Change your DB Credentials in `application.yml`
+4. Setup your MinIO credentials in `application.yml`
+5. Run your application: `mvn clean spring-boot:run`
+6. Open your POSTMAN App
