@@ -1,8 +1,12 @@
 package com.hendisantika.springbootminio.controller;
 
 import com.hendisantika.springbootminio.service.MinioAdapter;
+import io.minio.messages.Bucket;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -18,4 +22,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class MinioStorageController {
     private final MinioAdapter minioAdapter;
+
+    @GetMapping(path = "/buckets")
+    public List<Bucket> listBuckets() {
+        return minioAdapter.getAllBuckets();
+    }
 }
