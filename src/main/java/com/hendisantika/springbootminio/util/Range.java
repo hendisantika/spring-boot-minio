@@ -22,4 +22,8 @@ public class Range {
     public long getRangeStart() {
         return start;
     }
+
+    public long getRangeEnd(long fileSize) {
+        return Math.min(end, fileSize - 1);
+    }
 }
