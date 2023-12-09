@@ -65,4 +65,10 @@ public class VideoService {
             throw new StorageException(exception);
         }
     }
+
+    public record ChunkWithMetadata(
+            FileMetadataEntity metadata,
+            byte[] chunk
+    ) {
+    }
 }
