@@ -3,11 +3,10 @@ package com.hendisantika.springbootminio.controller;
 import com.hendisantika.springbootminio.service.MinioAdapter;
 import io.minio.messages.Bucket;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -41,5 +40,19 @@ public class MinioStorageController {
         Map<String, String> result = new HashMap<>();
         result.put("key", files.getOriginalFilename());
         return result;
+    }
+
+    @GetMapping(path = "/download")
+    public ResponseEntity<ByteArrayResource> downloadFile(@RequestParam(value = "file") String file) throws IOException {
+        byte[] data = minioAdapter.getFile(file);
+        ByteArrayResource resource = new ByteArrayResource(data);
+
+        return ResponseEntity
+                .ok()
+                .contentLength(data.length)
+                .header("Content-type", "application/octet-stream")
+                .header("Content-disposition", "attachment; filename=\"" + file + "\"")
+                .body(resource);
+
     }
 }
