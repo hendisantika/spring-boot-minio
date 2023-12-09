@@ -58,4 +58,8 @@ public class VideoController {
                 .header(CONTENT_RANGE, constructContentRangeHeader(parsedRange, chunkWithMetadata.metadata().getSize()))
                 .body(chunkWithMetadata.chunk());
     }
+
+    private String calculateContentLengthHeader(Range range, long fileSize) {
+        return String.valueOf(range.getRangeEnd(fileSize) - range.getRangeStart() + 1);
+    }
 }
